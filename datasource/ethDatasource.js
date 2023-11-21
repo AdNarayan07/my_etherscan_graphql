@@ -1,4 +1,4 @@
-const { RESTDataSource } = require("apollo-datasource-rest");
+const { RESTDataSource } = require("apollo-datasource-rest"); 
 
 //Vitalik's Ethereum Address
 const eth_address = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";
@@ -6,7 +6,8 @@ const eth_address = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";
 //Etherscan Data Source Class
 class EtherDataSource extends RESTDataSource {
   constructor() {
-    super();
+    super(); 
+    // Base URL points to Etherscan API
     this.baseURL = "https://api.etherscan.io/api";
   }
 
@@ -23,6 +24,19 @@ class EtherDataSource extends RESTDataSource {
   }
 
   //Paste Code Here For New API Endpoints
+  async getLatestEthereumPrice() {
+    // Get latest Ethereum price
+    return this.get(
+      `?module=stats&action=ethprice&apikey=${process.env.ETHERSCAN_API}`
+    );
+  }
+
+  async getBlockConfirmationTime() {
+    // Get estimated block confirmation time
+    return this.get(
+      `?module=gastracker&action=gasestimate&gasprice=2000000000&apikey=${process.env.ETHERSCAN_API}`
+    );
+  }
 }
 
 module.exports = EtherDataSource;
